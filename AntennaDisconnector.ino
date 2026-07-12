@@ -6,8 +6,8 @@ const int M3 = 6;
 const int M4 = 7;
 const int BTN1 = 2;
 const int BTN2 = 3;
-const int CONNECTED_GATE = A0;
-const int DISCONNECTED_GATE = A1;
+const int CONNECTED_GATE = A1;
+const int DISCONNECTED_GATE = A0;
 
 enum Direction {
   CONNECT,
@@ -31,16 +31,18 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  if (digitalRead(BTN1) == 0)
-  //  doSteps(true, 5);
-    //moveSteps(10, 1);
-    dir = CONNECT;
-  else if(digitalRead(BTN2) == 0)
-    //moveSteps(10, -1);
-    dir = DISCONNECT;
-  //else 
-    //stop();
+  if (digitalRead(BTN1) == 0) {
+    if (dir != CONNECT)
+      dir = CONNECT;
+    else 
+      dir = STOP;
+  }
+  else if(digitalRead(BTN2) == 0) {
+    if (dir != DISCONNECT)
+      dir = DISCONNECT;
+    else 
+      dir = STOP;
+  }
 
   bool isConnectedState = analogRead(CONNECTED_GATE) < 100;
   bool isDisconnectedState = analogRead(DISCONNECTED_GATE) < 100;
